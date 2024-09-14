@@ -10,20 +10,28 @@ export const useEditor = () => {
       initialContainer: HTMLDivElement;
     }) => {
       const initialWorkspace = new fabric.Rect({
-        width: 500,
-        height: 800,
+        width: 900,
+        height: 1200,
+        fill: "white",
         name: "clip",
-        fill: "red",
         selectable: false,
         hasControls: false,
         shadow: new fabric.Shadow({ color: "rgba(0,0,0,0.8)", blur: 5 }),
       });
+      initialCanvas.setWidth(initialContainer.offsetWidth);
+      initialCanvas.setHeight(initialContainer.offsetHeight);
+
       initialCanvas.add(initialWorkspace);
       initialCanvas.centerObject(initialWorkspace);
       initialCanvas.clipPath = initialWorkspace;
 
-      initialCanvas.setWidth(initialContainer.offsetWidth);
-      initialCanvas.setHeight(initialContainer.offsetHeight);
+      const test = new fabric.Rect({
+        width: 100,
+        height: 100,
+        fill: "black",
+      });
+      initialCanvas.add(test);
+      initialCanvas.centerObject(test);
     },
     []
   );
