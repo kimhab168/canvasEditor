@@ -16,10 +16,11 @@ export const useAutoResize = ({ canvas, container }: UseAutoResizeProps) => {
 
     const center = canvas.getCenter();
 
-    const zoomRatio = 0.85;
-    const localWorkspace = canvas.getObjects().find((object) => {
-      object.name === "clip";
-    });
+    const zoomRatio = 0.85; //85%
+    const localWorkspace = canvas
+      .getObjects()
+      .find((object) => object.name === "clip");
+
     //@ts-ignore
     const scale = fabric.util.findScaleToFit(localWorkspace, {
       width: width,

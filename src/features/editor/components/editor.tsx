@@ -2,7 +2,9 @@
 import { useEditor } from "@/features/editor/hooks/use-editor";
 import { fabric } from "fabric";
 import { useEffect, useRef } from "react";
-// import { Navbar } from "./navbar";
+import { Navbar } from "./navbar";
+import { Sidebar } from "./sidebar";
+import { Toolbar } from "./toolbar";
 const Editor = () => {
   const { init } = useEditor();
 
@@ -19,8 +21,15 @@ const Editor = () => {
   }, [init]);
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 h-full bg-muted" ref={containerRef}>
-        <canvas ref={canvasRef} />
+      <Navbar />
+      <div className="absolute h-[calc(100%-68px)] w-full top-[68px] flex">
+        <Sidebar />
+        <main className="bg-muted flex-1 overflow-auto relative flex flex-col">
+          <Toolbar />
+          <div className="flex-1 h-full bg-muted" ref={containerRef}>
+            <canvas ref={canvasRef} />
+          </div>
+        </main>
       </div>
     </div>
   );
