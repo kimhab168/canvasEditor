@@ -19,6 +19,10 @@ const Editor = () => {
       preserveObjectStacking: true,
     });
     init({ initialCanvas: canvas, initialContainer: containerRef.current! });
+
+    return () => {
+      canvas.dispose();
+    };
   }, [init]);
   return (
     <div className="flex flex-col h-full">
