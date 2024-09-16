@@ -142,6 +142,7 @@ export const Navbar = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          {/* TODO: add user-button */}
         </div>
       </div>
     </nav>
