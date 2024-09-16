@@ -21,7 +21,7 @@ const Editor = () => {
     init({ initialCanvas: canvas, initialContainer: containerRef.current! });
 
     return () => {
-      canvas.dispose();
+      canvas.dispose(); //set unmount by dispote to make canvas not zoom-in when click on any object in workspace canvas
     };
   }, [init]);
   return (
