@@ -22,7 +22,15 @@ import { Hint } from "@/components/hint";
 //Icons
 import { CiFileOn } from "react-icons/ci";
 import { BsCloudCheck } from "react-icons/bs";
-export const Navbar = () => {
+import { ActiveTool } from "../types";
+import { cn } from "@/lib/utils";
+
+interface NavbarProps {
+  activeTool: ActiveTool;
+  onChangeActiveTool: (tool: ActiveTool) => void;
+}
+
+export const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
   return (
     <nav className="w-full flex items-center p-4 h-[68px] gap-x-8 border-b lg:pl-[34px]">
       <Logo />
@@ -52,8 +60,8 @@ export const Navbar = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => {}} //TODO: Add function...
-            className="" //TODO: add dynamic class
+            onClick={() => onChangeActiveTool("select")}
+            className={cn(activeTool === "select" && "bg-gray-100")}
           >
             <MousePointerClick className="size-4" />
           </Button>

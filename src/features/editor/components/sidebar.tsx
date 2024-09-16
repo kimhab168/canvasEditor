@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { SidebarItem } from "@/features/editor/components/sidebar-item";
+import { ActiveTool } from "@/features/editor/types";
 import {
   LayoutTemplate,
   ImageIcon,
@@ -12,45 +13,50 @@ import {
   Type,
 } from "lucide-react";
 
-export function Sidebar() {
+interface SidebarProps {
+  activeTool: ActiveTool;
+  onChangeActiveTool: (tool: ActiveTool) => void;
+}
+
+export function Sidebar({ activeTool, onChangeActiveTool }: SidebarProps) {
   return (
     <aside className="bg-white flex flex-col w-[100px] h-full border-r overflow-y-auto">
       <ul className="flex flex-col">
         <SidebarItem
           icon={LayoutTemplate}
           label="Design"
-          isActive={false}
-          onClick={() => {}}
+          isActive={activeTool === "templates"}
+          onClick={() => onChangeActiveTool("templates")}
         />
         <SidebarItem
           icon={ImageIcon}
           label="Image"
-          isActive={false}
-          onClick={() => {}}
+          isActive={activeTool === "images"}
+          onClick={() => onChangeActiveTool("images")}
         />
         <SidebarItem
           icon={Type}
           label="Text"
-          isActive={false}
-          onClick={() => {}}
+          isActive={activeTool === "text"}
+          onClick={() => onChangeActiveTool("text")}
         />
         <SidebarItem
           icon={Shapes}
           label="Shapes"
-          isActive={false}
-          onClick={() => {}}
+          isActive={activeTool === "shapes"}
+          onClick={() => onChangeActiveTool("shapes")}
         />
         <SidebarItem
           icon={Sparkles}
           label="AI"
-          isActive={false}
-          onClick={() => {}}
+          isActive={activeTool === "ai"}
+          onClick={() => onChangeActiveTool("ai")}
         />
         <SidebarItem
           icon={Settings}
           label="Settings"
-          isActive={false}
-          onClick={() => {}}
+          isActive={activeTool === "settings"}
+          onClick={() => onChangeActiveTool("settings")}
         />
       </ul>
     </aside>
