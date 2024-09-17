@@ -1,10 +1,37 @@
 import { useCallback, useState, useMemo } from "react";
 import { fabric } from "fabric";
+
 import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
+
+import {
+  BuildEditorProps,
+  CIRCLE_OPTIONS,
+  Editor,
+} from "@/features/editor/types";
+const buildEditor = ({ canvas }: BuildEditorProps): Editor => {
+  return {
+    addCircle: () => {
+      const object = new fabric.Circle({
+        ...CIRCLE_OPTIONS,
+      });
+      canvas.add(object);
+      canvas.setActiveObject(object);
+    },
+  };
+};
+
 export const useEditor = () => {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   useAutoResize({ canvas, container });
+
+  //useMemo to save the state on the memory when the state change so the re-render won't effect the Memo
+  const editor = useMemo(() => {
+    if (canvas) {
+      return buildEditor({ canvas });
+    }
+    return undefined;
+  }, [canvas]);
 
   const init = useCallback(
     ({
@@ -55,5 +82,5 @@ export const useEditor = () => {
     []
   );
 
-  return { init };
+  return { init, editor };
 };

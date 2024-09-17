@@ -8,6 +8,7 @@ export const Logo = () => {
         <Image
           src="/hab_logo.svg"
           fill
+          priority
           alt="logo"
           className="shrink-0 hover:opacity-75 transition"
         />
