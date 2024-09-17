@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Logo } from "./logo";
+import { Logo } from "@/features/editor/components/logo";
 
 import {
   DropdownMenu,
@@ -22,7 +22,7 @@ import { Hint } from "@/components/hint";
 //Icons
 import { CiFileOn } from "react-icons/ci";
 import { BsCloudCheck } from "react-icons/bs";
-import { ActiveTool } from "../types";
+import { ActiveTool } from "@/features/editor/types";
 import { cn } from "@/lib/utils";
 
 interface NavbarProps {
