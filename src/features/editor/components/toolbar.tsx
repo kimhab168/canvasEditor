@@ -17,14 +17,7 @@ export const Toolbar = ({
 }: ToolbarProps) => {
   const selectdObject = editor?.canvas.getActiveObject();
 
-  const getProperty = (property: any) => {
-    if (!selectdObject) return null;
-
-    return selectdObject.get(property);
-  };
-
-  const fillColor = getProperty("fill");
-  const fillColor2 = editor?.fillColor;
+  const fillColor = editor?.getActiveFillColor();
 
   if (editor?.selectedObjects.length === 0) {
     return (
