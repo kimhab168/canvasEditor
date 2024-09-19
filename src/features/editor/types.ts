@@ -2,6 +2,43 @@ import { fabric } from "fabric";
 import { ITextboxOptions } from "fabric/fabric-impl";
 import * as material from "material-colors";
 
+export const fonts = [
+  "Arial",
+  "Arial Black",
+  "Verdana",
+  "Helvetica",
+  "Tahoma",
+  "Trebuchet MS",
+  "Times New Roman",
+  "Georgia",
+  "Garamond",
+  "Courier New",
+  "Brush Script MT",
+  "Palatino",
+  "Comic Sans MS",
+  "Impact",
+  "Lucida Sans Unicode",
+  "Lucida Console",
+  "Roboto",
+  "Open Sans",
+  "Lato",
+  "Montserrat",
+  "Oswald",
+  "PT Sans",
+  "Noto Sans",
+  "Fira Sans",
+  "Ubuntu",
+  "Segoe UI",
+  "Futura",
+  "Gill Sans",
+  "Century Gothic",
+  "Calibri",
+  "Cambria",
+  "Droid Sans",
+  "Lucida Bright",
+  "Optima",
+];
+
 export interface EditorHookProps {
   clearSelectionCallback?: () => void;
 }
@@ -66,9 +103,13 @@ export type BuildEditorProps = {
   setStrokeColor: (value: string) => void;
   setStrokeWidth: (value: number) => void;
   selectedObjects: fabric.Object[];
+  fontFamily: string;
+  setFontFamily: (value: string) => void;
 };
 
 export interface Editor {
+  getActiveFontFamily: () => string;
+  changeFontFamily: (value: string) => void;
   addText: (value: string, options?: ITextboxOptions) => void;
   getActiveOpacity: () => number;
   changeOpacity: (value: number) => void;
