@@ -11,6 +11,7 @@ import { ShapeSidebar } from "@/features/editor/components/shape-sidebar";
 import { FillColorSidebar } from "@/features/editor/components/fill-color-sidebar";
 import { StrokeColorSidebar } from "@/features/editor/components/stroke-color-sidebar";
 import { StrokeWidthSidebar } from "@/features/editor/components/stroke-width-sidebar";
+import { OpacitySidebar } from "@/features/editor/components/opacity-sidebar";
 const Editor = () => {
   //set default active on select feature
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
@@ -47,7 +48,7 @@ const Editor = () => {
     const canvas = new fabric.Canvas(canvasRef.current, {
       //make the object out of container cannot control
       controlsAboveOverlay: true,
-      preserveObjectStacking: true,
+      preserveObjectStacking: true, // if false the selecting element will be front of all elements/objects
     });
     init({ initialCanvas: canvas, initialContainer: containerRef.current! });
 
@@ -79,6 +80,11 @@ const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <StrokeWidthSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <OpacitySidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}

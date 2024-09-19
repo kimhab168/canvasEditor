@@ -52,6 +52,41 @@ const buildEditor = ({
   };
 
   return {
+    getActiveOpacity:()=>{
+      const selectedObject = selectedObjects[0];
+      if (!selectedObject) {
+        return 1;
+      }
+      const value = selectedObject.get("opacity") || 1;
+
+      //this version not support gradients & patterns yet
+      return value;
+    },
+    changeOpacity: (value: number) => {
+      canvas.getActiveObjects().forEach((object) => {
+        object.set({ opacity: value });
+      });
+      canvas.renderAll();
+    },
+
+    bringForward: () => {
+      canvas.getActiveObjects().forEach((object) => {
+        canvas.bringForward(object);
+      });
+
+      canvas.renderAll();
+      //move our workspace to always stay behind all objects
+      const workspace = getWorkspace();
+      workspace?.sendToBack();
+    },
+    sendBackwards: () => {
+      canvas.getActiveObjects().forEach((object) => {
+        canvas.sendBackwards(object);
+      });
+      canvas.renderAll();
+      const workspace = getWorkspace();
+      workspace?.sendToBack();
+    },
     //change fill color
     changeFillColor: (value: string) => {
       setFillColor(value);

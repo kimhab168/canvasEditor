@@ -4,6 +4,8 @@ import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { BsBorderWidth } from "react-icons/bs";
+import { ArrowDown, ArrowUp } from "lucide-react";
+import { RxTransparencyGrid } from "react-icons/rx";
 //TODO: add picker moving work
 interface ToolbarProps {
   editor: Editor | undefined;
@@ -72,6 +74,40 @@ export const Toolbar = ({
             className={cn(activeTool === "stroke-width" && "bg-gray-100")}
           >
             <BsBorderWidth className="size-4" />
+          </Button>
+        </Hint>
+      </div>
+      <div className="flex items-center h-full justify-center">
+        <Hint label="Bring Forward" side="bottom" sideOffset={5}>
+          <Button
+            onClick={() => editor?.bringForward()}
+            size="icon"
+            variant="ghost"
+          >
+            <ArrowUp className="size-4" />
+          </Button>
+        </Hint>
+      </div>
+      <div className="flex items-center h-full justify-center">
+        <Hint label="Send Backward" side="bottom" sideOffset={5}>
+          <Button
+            onClick={() => editor?.sendBackwards()}
+            size="icon"
+            variant="ghost"
+          >
+            <ArrowDown className="size-4" />
+          </Button>
+        </Hint>
+      </div>
+      <div className="flex items-center h-full justify-center">
+        <Hint label="Opacity" side="bottom" sideOffset={5}>
+          <Button
+            onClick={() => onChangeActiveTool("opacity")}
+            size="icon"
+            variant="ghost"
+            className={cn(activeTool === "opacity" && "bg-gray-100")}
+          >
+            <RxTransparencyGrid className="size-4" />
           </Button>
         </Hint>
       </div>
