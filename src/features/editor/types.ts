@@ -108,6 +108,14 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  getActiveFontLinethrough: () => string;
+  changeFontLinethrough: (value: boolean) => void;
+  getActiveFontUnderline: () => string;
+  changeFontUnderline: (value: boolean) => void;
+  getActiveFontStyle: () => string;
+  changeFontStyle: (value: string) => void;
+  changeFontWeight: (value: number) => void;
+  getActiveFontWeight: () => number;
   getActiveFontFamily: () => string;
   changeFontFamily: (value: string) => void;
   addText: (value: string, options?: ITextboxOptions) => void;
@@ -139,6 +147,7 @@ export const STROKE_WIDTH = 2;
 export const STROKE_DASH_ARRAY = [];
 export const FONT_FAMILY = "Arial";
 export const FONT_SIZE = 32;
+export const FONT_WEIGHT = 400;
 
 export const CIRCLE_OPTIONS = {
   radius: 225,

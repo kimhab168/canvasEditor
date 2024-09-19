@@ -17,6 +17,7 @@ import {
   STROKE_DASH_ARRAY,
   TEXT_OPTIONS,
   FONT_FAMILY,
+  FONT_WEIGHT,
 } from "@/features/editor/types";
 import { UseCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
 import { isTextType } from "@/features/editor/utils";
@@ -73,6 +74,62 @@ const buildEditor = ({
 
       //this version not support gradients & patterns yet
       return value;
+    },
+    changeFontUnderline: (value: boolean) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          //@ts-ignore
+          object.set({ underline: value });
+        }
+      });
+      canvas.renderAll();
+    },
+    getActiveFontUnderline: () => {
+      const selectedObject = selectedObjects[0];
+      if (!selectedObject) {
+        return false;
+      }
+      //@ts-ignore
+      const value = selectedObject.get("underline") || false;
+
+      return value;
+    },
+    changeFontLinethrough: (value: boolean) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          //@ts-ignore
+          object.set({ linethrough: value });
+        }
+      });
+      canvas.renderAll();
+    },
+    getActiveFontLinethrough: () => {
+      const selectedObject = selectedObjects[0];
+      if (!selectedObject) {
+        return false;
+      }
+      //@ts-ignore
+      const value = selectedObject.get("linethrough") || false;
+
+      return value;
+    },
+    changeFontStyle: (value: string) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          //@ts-ignore
+          object.set({ fontStyle: value });
+        }
+      });
+      canvas.renderAll();
+    },
+    changeFontWeight: (value: number) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          //@ts-ignore
+          object.set({ fontWeight: value });
+        }
+      });
+      canvas.renderAll();
     },
     changeOpacity: (value: number) => {
       canvas.getActiveObjects().forEach((object) => {
@@ -235,6 +292,26 @@ const buildEditor = ({
       addToCanvas(object);
     },
     canvas,
+    getActiveFontStyle: () => {
+      const selectedObject = selectedObjects[0];
+      if (!selectedObject) {
+        return "normal";
+      }
+      //@ts-ignore
+      const value = selectedObject.get("fontStyle") || "normal";
+
+      return value;
+    },
+    getActiveFontWeight: () => {
+      const selectedObject = selectedObjects[0];
+      if (!selectedObject) {
+        return FONT_WEIGHT;
+      }
+      //@ts-ignore
+      const value = selectedObject.get("fontWeight") || FONT_WEIGHT;
+
+      return value;
+    },
     getActiveFontFamily: () => {
       const selectedObject = selectedObjects[0];
       if (!selectedObject) {
