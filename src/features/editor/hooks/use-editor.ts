@@ -15,6 +15,7 @@ import {
   STROKE_WIDTH,
   EditorHookProps,
   STROKE_DASH_ARRAY,
+  TEXT_OPTIONS,
 } from "@/features/editor/types";
 import { UseCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
 import { isTextType } from "@/features/editor/utils";
@@ -52,7 +53,15 @@ const buildEditor = ({
   };
 
   return {
-    getActiveOpacity:()=>{
+    addText: (value, options) => {
+      const object = new fabric.Textbox(value, {
+        ...TEXT_OPTIONS,
+        fill: fillColor,
+        ...options,
+      });
+      addToCanvas(object);
+    },
+    getActiveOpacity: () => {
       const selectedObject = selectedObjects[0];
       if (!selectedObject) {
         return 1;
