@@ -108,6 +108,7 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  delete: () => void;
   getActiveFontSize: () => number;
   changeFontSize: (value: number) => void;
   getActiveTextAlign: () => string;
