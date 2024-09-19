@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { ActiveTool, Editor, FONT_WEIGHT } from "@/features/editor/types";
+import {
+  ActiveTool,
+  Editor,
+  FONT_SIZE,
+  FONT_WEIGHT,
+} from "@/features/editor/types";
 import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -13,8 +18,9 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { RxTransparencyGrid } from "react-icons/rx";
-import { isTextType } from "../utils";
+import { isTextType } from "@/features/editor/utils";
 import { FaBold, FaItalic, FaStrikethrough, FaUnderline } from "react-icons/fa";
+import { FontSizeInput } from "@/features/editor/components/font-size-input";
 //TODO: add picker moving work
 interface ToolbarProps {
   editor: Editor | undefined;
@@ -39,6 +45,7 @@ export const Toolbar = ({
   const initialFontLinethrough = editor?.getActiveFontLinethrough() || false;
   const initialFontUnderline = editor?.getActiveFontUnderline() || false;
   const initialTextAlign = editor?.getActiveTextAlign();
+  const initialFontSize = editor?.getActiveFontSize() || FONT_SIZE;
 
   const [properties, setProperties] = useState({
     fillColor: initialFillColor,
@@ -49,7 +56,17 @@ export const Toolbar = ({
     fontLinethrough: initialFontLinethrough,
     fontUnderline: initialFontUnderline,
     textAlign: initialTextAlign,
+    fontSize: initialFontSize,
   });
+
+  const onChangeFontSize = (value: number) => {
+    if (!selectedObject) {
+      return;
+    }
+    editor?.changeFontSize(value);
+    setProperties((current) => ({ ...current, fontSize: value }));
+  };
+
   const onChangeTextAlign = (value: string) => {
     if (!selectedObject) {
       return;
@@ -285,6 +302,14 @@ export const Toolbar = ({
               <AlignRight className="size-4" />
             </Button>
           </Hint>
+        </div>
+      )}
+      {isText && (
+        <div className="flex items-center h-full justify-center">
+          <FontSizeInput
+            value={properties.fontSize}
+            onChange={onChangeFontSize}
+          />
         </div>
       )}
       <div className="flex items-center h-full justify-center">
