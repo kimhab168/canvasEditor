@@ -14,6 +14,7 @@ import { StrokeWidthSidebar } from "@/features/editor/components/stroke-width-si
 import { OpacitySidebar } from "@/features/editor/components/opacity-sidebar";
 import { TextSidebar } from "@/features/editor/components/text-sidebar";
 import { FontSidebar } from "@/features/editor/components/font-sidebar";
+import { ImagesSidebar } from "@/features/editor/components/images-sidebar";
 const Editor = () => {
   //set default active on select feature
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
@@ -97,6 +98,11 @@ const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <FontSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <ImagesSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
