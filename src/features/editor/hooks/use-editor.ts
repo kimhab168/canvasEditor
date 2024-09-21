@@ -23,6 +23,7 @@ import {
 import { UseCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
 import { createFilter, isTextType } from "@/features/editor/utils";
 import { useClipboard } from "@/features/editor/hooks/use-clipboard";
+import { useHistory } from "@/features/editor/hooks/use-history";
 const buildEditor = ({
   autoZoom,
   copy,
@@ -62,6 +63,22 @@ const buildEditor = ({
   };
 
   return {
+    autoZoom,
+    zoomIn: () => {
+      let zoomRatio = canvas.getZoom();
+      zoomRatio += 0.1;
+      const center = canvas.getCenter();
+      canvas.zoomToPoint(new fabric.Point(center.left, center.top), zoomRatio);
+    },
+    zoomOut: () => {
+      let zoomRatio = canvas.getZoom();
+      zoomRatio -= 0.1;
+      const center = canvas.getCenter();
+      canvas.zoomToPoint(
+        new fabric.Point(center.left, center.top),
+        zoomRatio < 0.2 ? 0.2 : zoomRatio
+      );
+    },
     getWorkspace,
     changeSize: (value: { width: number; height: number }) => {
       const workspace = getWorkspace();
@@ -472,12 +489,16 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
   const [strokeDashArray, setStrokeDashArray] =
     useState<number[]>(STROKE_DASH_ARRAY);
+
+  const { save } = useHistory({ canvas });
+
   //clipboard hook (copy & paste features)
   const { copy, paste } = useClipboard({ canvas });
 
   const { autoZoom } = useAutoResize({ canvas, container });
 
   UseCanvasEvents({
+    save,
     canvas,
     setSelectedObjects,
     clearSelectionCallback,
