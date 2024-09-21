@@ -64,7 +64,8 @@ const Editor = () => {
   }, [init]);
   return (
     <div className="flex flex-col h-full">
-      <Navbar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
+      <Navbar editor={editor} 
+      activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
       <div className="absolute h-[calc(100%-68px)] w-full top-[68px] flex">
         <Sidebar
           activeTool={activeTool}

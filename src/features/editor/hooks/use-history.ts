@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { use, useCallback, useRef, useState } from "react";
 import { fabric } from "fabric";
 import { JSON_KEYS } from "@/features/editor/types";
 interface UseHistoryProps {
@@ -17,18 +17,57 @@ export const useHistory = ({ canvas }: UseHistoryProps) => {
     return historyIndex < canvasHistory.current.length - 1;
   }, [historyIndex]);
 
-  const save = useCallback((skip=false) => {
-    if (!canvas) return;
-    const currentState = canvas.toJSON(JSON_KEYS);
-    const json = JSON.stringify(currentState);
+  const save = useCallback(
+    (skip = false) => {
+      if (!canvas) return;
+      const currentState = canvas.toJSON(JSON_KEYS);
+      const json = JSON.stringify(currentState);
+      if (skip || skipSave.current) return;
+      if (!skip && !skipSave.current) {
+        canvasHistory.current.push(json);
+        setHistoryIndex(canvasHistory.current.length - 1);
+      }
+      //TODO:  callback (save to db)
+    },
+    [canvas]
+  );
+  const undo = useCallback(() => {
+    if (canUndo()) {
+      skipSave.current = true;
+      canvas?.clear().renderAll();
 
-    if (!skipSave.current) {
-      canvasHistory.current.push(json);
-      setHistoryIndex(canvasHistory.current.length - 1);
+      const previousIndex = historyIndex - 1;
+      const previousState = JSON.parse(canvasHistory.current[previousIndex]);
+      canvas?.loadFromJSON(previousState, () => {
+        canvas.renderAll();
+        setHistoryIndex(previousIndex);
+        skipSave.current = false;
+      });
     }
-    //TODO:  callback (save to db)
-  }, [canvas]);
+  }, [canUndo, canvas, historyIndex]);
+
+  const redo = useCallback(() => {
+    if (canRedo()) {
+      skipSave.current = true;
+      canvas?.clear().renderAll();
+
+      const nextIndex = historyIndex + 1;
+      const nextState = JSON.parse(canvasHistory.current[nextIndex]);
+      canvas?.loadFromJSON(nextState, () => {
+        canvas.renderAll();
+        setHistoryIndex(nextIndex);
+        skipSave.current = false;
+      });
+    }
+  }, [canvas, historyIndex, canRedo]);
+
   return {
     save,
+    canRedo,
+    canUndo,
+    undo,
+    redo,
+    setHistoryIndex,
+    canvasHistory,
   };
 };
