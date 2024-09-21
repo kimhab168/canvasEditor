@@ -21,7 +21,7 @@ import {
   FONT_SIZE,
 } from "@/features/editor/types";
 import { UseCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
-import { isTextType } from "@/features/editor/utils";
+import { createFilter, isTextType } from "@/features/editor/utils";
 import { ITextOptions } from "fabric/fabric-impl";
 const buildEditor = ({
   canvas,
@@ -59,6 +59,31 @@ const buildEditor = ({
   };
 
   return {
+    getActiveImageFilter: () => {
+      const selectedObject = selectedObjects[0];
+      if (!selectedObject) {
+        return [];
+      }
+      //@ts-ignore
+      const value = selectedObject.get("filters") || [];
+
+      //this version not support gradients & patterns yet
+      return value;
+    },
+    changeImageFilter: (value: string) => {
+      const objects = canvas.getActiveObjects();
+      objects.forEach((object) => {
+        if (object.type === "image") {
+          const imageObject = object as fabric.Image;
+
+          const effect = createFilter(value);
+
+          imageObject.filters = effect ? [effect] : [];
+          imageObject.applyFilters();
+          canvas.renderAll();
+        }
+      });
+    },
     addImage: (value: string) => {
       // console.log("Success");
       fabric.Image.fromURL(

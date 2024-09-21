@@ -15,6 +15,7 @@ import { OpacitySidebar } from "@/features/editor/components/opacity-sidebar";
 import { TextSidebar } from "@/features/editor/components/text-sidebar";
 import { FontSidebar } from "@/features/editor/components/font-sidebar";
 import { ImagesSidebar } from "@/features/editor/components/images-sidebar";
+import { FilterSidebar } from "@/features/editor/components/filter-sidebar";
 const Editor = () => {
   //set default active on select feature
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
@@ -103,6 +104,11 @@ const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <ImagesSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <FilterSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
