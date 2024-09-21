@@ -16,6 +16,7 @@ import { TextSidebar } from "@/features/editor/components/text-sidebar";
 import { FontSidebar } from "@/features/editor/components/font-sidebar";
 import { ImagesSidebar } from "@/features/editor/components/images-sidebar";
 import { FilterSidebar } from "@/features/editor/components/filter-sidebar";
+import { SettingsSidebar } from "@/features/editor/components/settings-sizebar.tsx";
 const Editor = () => {
   //set default active on select feature
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
@@ -24,15 +25,16 @@ const Editor = () => {
       if (tool === activeTool) {
         return setActiveTool("select");
       }
-      if (tool === "draw") {
-        //TODO: Enable Draw Mode
-      }
-      if (activeTool === "draw") {
-        //TODO: Disable Draw Mode
-      }
+      //if need use it
+      // if (tool === "draw") {
+      //   Enable Draw Mode
+      // }
+      // if (activeTool === "draw") {
+      //   Disable Draw Mode
+      // }
       setActiveTool(tool);
     },
-    [activeTool]
+    [activeTool] //get back activeTool callback to this global/editor state from child
   );
 
   const onClearSelection = useCallback(() => {
@@ -109,6 +111,11 @@ const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
         <FilterSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+        <SettingsSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}

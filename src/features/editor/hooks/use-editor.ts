@@ -24,6 +24,7 @@ import { UseCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
 import { createFilter, isTextType } from "@/features/editor/utils";
 import { useClipboard } from "@/features/editor/hooks/use-clipboard";
 const buildEditor = ({
+  autoZoom,
   copy,
   paste,
   canvas,
@@ -61,6 +62,19 @@ const buildEditor = ({
   };
 
   return {
+    getWorkspace,
+    changeSize: (value: { width: number; height: number }) => {
+      const workspace = getWorkspace();
+      workspace?.set(value);
+      autoZoom();
+      //TODO: save
+    },
+    changeBackground: (value: string) => {
+      const workspace = getWorkspace();
+      workspace?.set({ fill: value });
+      canvas.renderAll();
+      //TODO: save
+    },
     onCopy: () => copy(),
     onPaste: () => paste(),
     changeImageFilter: (value: string) => {
@@ -461,7 +475,7 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   //clipboard hook (copy & paste features)
   const { copy, paste } = useClipboard({ canvas });
 
-  useAutoResize({ canvas, container });
+  const { autoZoom } = useAutoResize({ canvas, container });
 
   UseCanvasEvents({
     canvas,
@@ -473,6 +487,7 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const editor = useMemo(() => {
     if (canvas) {
       return buildEditor({
+        autoZoom,
         copy,
         paste,
         canvas,
@@ -499,6 +514,7 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
     selectedObjects,
     strokeDashArray,
     fontFamily,
+    autoZoom,
   ]);
 
   const init = useCallback(
