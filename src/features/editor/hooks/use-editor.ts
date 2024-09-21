@@ -22,8 +22,10 @@ import {
 } from "@/features/editor/types";
 import { UseCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
 import { createFilter, isTextType } from "@/features/editor/utils";
-import { ITextOptions } from "fabric/fabric-impl";
+import { useClipboard } from "@/features/editor/hooks/use-clipboard";
 const buildEditor = ({
+  copy,
+  paste,
   canvas,
   fillColor,
   setFillColor,
@@ -59,17 +61,8 @@ const buildEditor = ({
   };
 
   return {
-    getActiveImageFilter: () => {
-      const selectedObject = selectedObjects[0];
-      if (!selectedObject) {
-        return [];
-      }
-      //@ts-ignore
-      const value = selectedObject.get("filters") || [];
-
-      //this version not support gradients & patterns yet
-      return value;
-    },
+    onCopy: () => copy(),
+    onPaste: () => paste(),
     changeImageFilter: (value: string) => {
       const objects = canvas.getActiveObjects();
       objects.forEach((object) => {
@@ -465,6 +458,8 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
   const [strokeDashArray, setStrokeDashArray] =
     useState<number[]>(STROKE_DASH_ARRAY);
+  //clipboard hook (copy & paste features)
+  const { copy, paste } = useClipboard({ canvas });
 
   useAutoResize({ canvas, container });
 
@@ -478,6 +473,8 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
   const editor = useMemo(() => {
     if (canvas) {
       return buildEditor({
+        copy,
+        paste,
         canvas,
         fillColor,
         setFillColor,
@@ -494,6 +491,8 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
     }
     return undefined;
   }, [
+    copy,
+    paste,
     canvas,
     strokeWidth,
     strokeColor,
@@ -512,13 +511,14 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
     }) => {
       //custome prototype of object(shape)
       fabric.Object.prototype.set({
-        cornerColor: "#fff",
-        cornerStyle: "circle",
-        borderColor: "#3b82f6",
+        cornerColor: "#ff5c00",
+        cornerStyle: "rect",
+        borderColor: "#ff5c00",
         borderScaleFactor: 1.5,
         transparentCorners: false,
         borderOpacityWhenMoving: 1,
-        cornerStrokeColor: "#3b82f6",
+        cornerStrokeColor: "#ff5c00",
+        padding: 0,
       });
 
       const initialWorkspace = new fabric.Rect({

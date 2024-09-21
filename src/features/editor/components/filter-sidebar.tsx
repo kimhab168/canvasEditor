@@ -19,8 +19,6 @@ export const FilterSidebar = ({
   activeTool,
   onChangeActiveTool,
 }: FilterSidebarProps) => {
-  const value = editor?.getActiveImageFilter() || [];
-
   const onClose = () => {
     onChangeActiveTool("select");
   };
@@ -44,10 +42,7 @@ export const FilterSidebar = ({
               key={filter}
               variant="secondary"
               size="lg"
-              className={cn(
-                "w-full h-16 justify-start text-left",
-                value[0] === filter && "border-2 border-blue-500"
-              )}
+              className={cn("w-full h-16 justify-start text-left")}
               onClick={() => editor?.changeImageFilter(filter)}
             >
               {filter}
