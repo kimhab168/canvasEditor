@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 import { Logo } from "@/features/editor/components/logo";
-
+import { useFilePicker } from "use-file-picker";
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuContent,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger, 
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import {
@@ -107,7 +107,7 @@ export const Navbar = ({
             <DropdownMenuContent align="end" className="min-w-60">
               <DropdownMenuItem
                 className="flex items-center gap-x-2"
-                onClick={() => {}} //TODO: add function....
+                onClick={() => editor?.saveJson()}
               >
                 <CiFileOn className="size-8" />
                 <div>
@@ -119,7 +119,7 @@ export const Navbar = ({
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-x-2"
-                onClick={() => {}} //TODO: add function....
+                onClick={() => editor?.savePng()}
               >
                 <CiFileOn className="size-8" />
                 <div>
@@ -131,7 +131,7 @@ export const Navbar = ({
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-x-2"
-                onClick={() => {}} //TODO: add function....
+                onClick={() => editor?.saveJpg()}
               >
                 <CiFileOn className="size-8" />
                 <div>
@@ -143,7 +143,7 @@ export const Navbar = ({
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-x-2"
-                onClick={() => {}} //TODO: add function....
+                onClick={() => editor?.saveSvg()}
               >
                 <CiFileOn className="size-8" />
                 <div>
