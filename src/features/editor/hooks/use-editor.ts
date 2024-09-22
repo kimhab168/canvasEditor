@@ -25,6 +25,7 @@ import { UseCanvasEvents } from "@/features/editor/hooks/use-canvas-events";
 import { createFilter, isTextType } from "@/features/editor/utils";
 import { useClipboard } from "@/features/editor/hooks/use-clipboard";
 import { useHistory } from "@/features/editor/hooks/use-history";
+import { useHotKeys } from "@/features/editor/hooks/use-hotkeys";
 const buildEditor = ({
   save,
   undo,
@@ -516,6 +517,8 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
     setSelectedObjects,
     clearSelectionCallback,
   });
+
+  useHotKeys({ canvas, save, redo, undo, copy, paste }); //paste to make shortcut keys in useHotkeys Hook
 
   //useMemo to save the state on the memory when the state change so the re-render won't effect the Memo
   const editor = useMemo(() => {

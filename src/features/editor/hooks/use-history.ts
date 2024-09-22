@@ -22,7 +22,7 @@ export const useHistory = ({ canvas }: UseHistoryProps) => {
       if (!canvas) return;
       const currentState = canvas.toJSON(JSON_KEYS);
       const json = JSON.stringify(currentState);
-      if (skip || skipSave.current) return;
+      // if (skip || skipSave.current) return;
       if (!skip && !skipSave.current) {
         canvasHistory.current.push(json);
         setHistoryIndex(canvasHistory.current.length - 1);
