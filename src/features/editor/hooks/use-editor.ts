@@ -31,6 +31,7 @@ import {
 import { useClipboard } from "@/features/editor/hooks/use-clipboard";
 import { useHistory } from "@/features/editor/hooks/use-history";
 import { useHotKeys } from "@/features/editor/hooks/use-hotkeys";
+import { useWindowEvent } from "@/features/editor/hooks/use-window-events";
 const buildEditor = ({
   save,
   undo,
@@ -569,6 +570,8 @@ export const useEditor = ({ clearSelectionCallback }: EditorHookProps) => {
 
   const { save, canRedo, canUndo, redo, undo, canvasHistory, setHistoryIndex } =
     useHistory({ canvas });
+
+  useWindowEvent();
 
   //clipboard hook (copy & paste features)
   const { copy, paste } = useClipboard({ canvas });
